@@ -9,7 +9,9 @@ imagedir="$1"
 outputfile="$2"
 
 echo '<?xml version="1.0" encoding="UTF-8"?>
-<zabbix_export version="1.0" date="'$(date "+%d.%m.%y")'" time="'$(date "+%H.%M")'">
+<zabbix_export>
+	<version>4.4</version>
+	<date>'$(date "+%Y-%m-%d")'T'$(date "+%H:%M:%S")'Z</date>
   <images>' > "$outputfile"
 
 imagecount=$(ls $imagedir/*.png | wc -l)
@@ -22,9 +24,7 @@ for imagefile in $imagedir/*.png; do
     </image>" >> "$outputfile"
 	echo -n "$[$imagesdone*100/$imagecount]% "
 done
-echo
-
 echo '  </images>
-  <sysmaps>
-  </sysmaps>
+
 </zabbix_export>' >> "$outputfile"
+echo
